@@ -1,0 +1,40 @@
+<h2>Create new message</h2>
+
+<div>
+  <label for="content">Content: </label>
+  <input
+    id="content"
+    [(ngModel)]="message.content"
+    placeholder="placeholder..."
+  />
+
+  <div><span>created at: </span>{{ message.createdAt }}</div>
+  <div><span>udpated at: </span>{{ message.updatedAt }}</div>
+
+  <label for="tags">tags: </label>
+  <input id="tags" [(ngModel)]="message.tags" placeholder="placeholder..." />
+
+  <label for="icon">icon: </label>
+  <input id="icon" [(ngModel)]="message.icon" placeholder="placeholder..." />
+
+  <label for="link">link: </label>
+  <input id="link" [(ngModel)]="message.link" placeholder="placeholder..." />
+
+  <label for="deadline">deadline: </label>
+  <input
+    id="deadline"
+    [(ngModel)]="message.deadline"
+    placeholder="placeholder..."
+  />
+</div>
+
+<h2>List of messages</h2>
+<ul class="heroes">
+  <li *ngFor="let message of messages">
+    <span>{{ message.id }}</span>
+    <span>{{ message.content }}</span>
+    <button [class.selected]="message === selectedMessage"  type="button" (click)="onSelect(message)">Select me</button>
+  </li>
+</ul>
+
+<app-message-detail [message]="selectedMessage"></app-message-detail>

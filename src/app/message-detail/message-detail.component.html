@@ -1,0 +1,25 @@
+<div *ngIf="message">
+  <h2>Message details</h2>
+
+  <div><span>id: </span>{{ message.id }}</div>
+  <div><span>created at: </span>{{ message.createdAt }}</div>
+  <div><span>udpated at: </span>{{ message.updatedAt }}</div>
+
+  <div>
+    <label for="message-content">Hero name: </label>
+    <input
+      id="message-content"
+      [(ngModel)]="message.content"
+      placeholder="content"
+    />
+
+    <label for="tags">tags: </label>
+    <input id="tags" [(ngModel)]="message.tags" placeholder="placeholder..." />
+
+    <label for="icon">icon: </label>
+    <input id="icon" [(ngModel)]="message.icon" placeholder="placeholder..." />
+
+    <label for="link">link: </label>
+    <input id="link" [(ngModel)]="message.link" placeholder="placeholder..." />
+  </div>
+</div>
