@@ -96,7 +96,15 @@ export class MessageDetailComponent implements OnInit {
 
   private updateUser() {
     this.messageService
-      .updateMessage(this.id, this.form.value)
+      .updateMessage(this.id, {
+        ...this.form.value,
+        tags: this.form.value.tags.trim()
+          ? this.form.value.tags
+              .trim()
+              .split(',')
+              .map((tag: string) => tag.trim())
+          : [],
+      })
       .pipe(first())
       .subscribe({
         next: () => {
