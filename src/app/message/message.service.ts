@@ -13,8 +13,7 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class MessageService {
-  private urlMessages: string = 'http://localhost:8080/messages';
-  private urlMessage: string = 'http://localhost:8080/message';
+  private urlMessages: string = 'http://localhost:8080/api/v1/messages';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -23,7 +22,7 @@ export class MessageService {
   constructor(private http: HttpClient) {}
 
   getMessageById(id: number): Observable<Message> {
-    const url = `${this.urlMessage}/${id}`;
+    const url = `${this.urlMessages}/${id}`;
     return this.http.get<Message>(url, this.httpOptions);
   }
 
