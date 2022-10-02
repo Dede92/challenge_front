@@ -36,7 +36,7 @@ export class MessageService {
 
   updateMessage(id: number, message: Message): Observable<Message> {
     const url = `${this.urlMessages}/${id}`;
-    return this.http.post<Message>(url, message, this.httpOptions);
+    return this.http.put<Message>(url, message, this.httpOptions);
   }
 
   deleteMessage(id: number): Observable<Message> {
