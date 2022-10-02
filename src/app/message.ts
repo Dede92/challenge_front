@@ -1,10 +1,10 @@
 export interface Message {
     id: number,
     content: string,
-    createdAt: string,
-    updatedAt: string,
-    deadline: string,
+    createdAt: Date,
+    updatedAt: Date,
+    deadline: Date,
     link: string,
     icon: string,
-    tags: string,
+    tags: string[],
 }

@@ -1,25 +1,82 @@
-<div *ngIf="message">
-  <h2>Message details</h2>
+<h2 *ngIf="isAddMode">Create new message</h2>
+<h2 *ngIf="!isAddMode">Edit message {{ id }}</h2>
 
-  <div><span>id: </span>{{ message.id }}</div>
-  <div><span>created at: </span>{{ message.createdAt }}</div>
-  <div><span>udpated at: </span>{{ message.updatedAt }}</div>
-
-  <div>
-    <label for="message-content">Hero name: </label>
-    <input
-      id="message-content"
-      [(ngModel)]="message.content"
-      placeholder="content"
-    />
-
-    <label for="tags">tags: </label>
-    <input id="tags" [(ngModel)]="message.tags" placeholder="placeholder..." />
-
-    <label for="icon">icon: </label>
-    <input id="icon" [(ngModel)]="message.icon" placeholder="placeholder..." />
-
-    <label for="link">link: </label>
-    <input id="link" [(ngModel)]="message.link" placeholder="placeholder..." />
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label class="form-label" for="content">Content: </label>
+    <textarea
+      type="text"
+      class="form-control"
+      placeholder="placeholder..."
+      formControlName="content"
+      id="content"
+      [ngClass]="{ 'is-invalid': submitted && f['content'].errors }"
+    ></textarea>
+    <div *ngIf="submitted && f['content'].errors" class="invalid-feedback">
+      <div *ngIf="f['content'].errors['required']">
+        Message's content is required
+      </div>
+    </div>
   </div>
-</div>
+
+  <div class="form-group">
+    <label class="form-label" for="tag">tags: </label>
+    <input
+      formControlName="tags"
+      name="tag"
+      class="form-control"
+      type="text"
+      placeholder="tag..."
+    />
+    <div class="">
+      <div>tags must be seperated by semicolon ( , )</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="icon">icon: </label>
+    <input
+      type="text"
+      name="icon"
+      class="form-control"
+      id="icon"
+      formControlName="icon"
+      placeholder="placeholder..."
+    />
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="link">link: </label>
+    <input
+      name="link"
+      class="form-control"
+      type="text"
+      id="link"
+      formControlName="link"
+      placeholder="placeholder..."
+      [ngClass]="{ 'is-invalid': submitted && f['link'].errors }"
+    />
+    <div *ngIf="submitted && f['link'].errors" class="invalid-feedback">
+      <div *ngIf="f['link'].errors?.['pattern']">Please provide valid url</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="deadline">deadline: </label>
+    <div class="input-group">
+      <input
+        name="deadline"
+        class="form-control"
+        id="deadline"
+        formControlName="deadline"
+        placeholder="yyyy-mm-dd"
+        type="date"
+      />
+    </div>
+  </div>
+
+  <button [disabled]="loading" class="btn btn-primary">
+    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+    Save
+  </button>
+</form>

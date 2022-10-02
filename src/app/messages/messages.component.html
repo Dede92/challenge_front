@@ -1,40 +1,113 @@
-<h2>Create new message</h2>
+<div class="d-flex flex-column">
+  <div>
+    <h2>List of messages</h2>
 
-<div>
-  <label for="content">Content: </label>
-  <input
-    id="content"
-    [(ngModel)]="message.content"
-    placeholder="placeholder..."
-  />
+    <ngb-accordion #acc="ngbAccordion">
+      <ngb-panel
+        *ngFor="let message of messages"
+        id="toggle-{{ message.id }}"
+        title="Message {{ message.id }}"
+      >
+        <ng-template ngbPanelContent>
+          <form>
+            <div class="mb-3">
+              <label class="form-label" for="content">Content: </label>
+              <textarea
+                name="content"
+                class="form-control"
+                type="text"
+                id="content"
+                [(ngModel)]="message.content"
+                placeholder="placeholder..."
+                disabled
+              ></textarea>
+            </div>
 
-  <div><span>created at: </span>{{ message.createdAt }}</div>
-  <div><span>udpated at: </span>{{ message.updatedAt }}</div>
+            <div class="form-group">
+              <label class="form-label" for="tag">Tags: </label>
 
-  <label for="tags">tags: </label>
-  <input id="tags" [(ngModel)]="message.tags" placeholder="placeholder..." />
+              <div *ngIf="message.tags.length > 0" class="d-flex mt-2">
+                <span
+                  *ngFor="let tag of message.tags"
+                  class="border border-primary mx-2 p-1"
+                  >{{ tag }}
+                </span>
+              </div>
+            </div>
 
-  <label for="icon">icon: </label>
-  <input id="icon" [(ngModel)]="message.icon" placeholder="placeholder..." />
+            <div class="form-group">
+              <label class="form-label" for="icon">Icon: </label>
+              <input
+                name="icon"
+                class="form-control"
+                type="text"
+                id="icon"
+                [(ngModel)]="message.icon"
+                placeholder="placeholder..."
+                disabled
+              />
+            </div>
 
-  <label for="link">link: </label>
-  <input id="link" [(ngModel)]="message.link" placeholder="placeholder..." />
+            <div class="form-group">
+              <label class="form-label" for="link">Link: </label>
+              <input
+                name="link"
+                class="form-control"
+                type="text"
+                id="link"
+                [(ngModel)]="message.link"
+                placeholder="placeholder..."
+                disabled
+              />
+            </div>
 
-  <label for="deadline">deadline: </label>
-  <input
-    id="deadline"
-    [(ngModel)]="message.deadline"
-    placeholder="placeholder..."
-  />
+            <div class="form-group">
+              <label class="form-label" for="deadline">Deadline: </label>
+              <div class="input-group">
+                <input
+                  name="deadline"
+                  class="form-control"
+                  id="deadline"
+                  [ngModel]="message.deadline | date: 'yyyy-MM-dd'"
+                  placeholder="yyyy-mm-dd"
+                  type="date"
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="createdAt">Created at: </label>
+              <input
+                name="createdAt"
+                class="form-control"
+                type="text"
+                id="createdAt"
+                [(ngModel)]="message.createdAt"
+                disabled
+              />
+            </div>
+
+            <div class="d-flex justify-content-around">
+              <button
+                type="button"
+                class="btn btn-primary"
+                routerLink="/edit/{{ message.id }}"
+              >
+                Update message
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="onDelete(message)"
+              >
+                Delete message
+              </button>
+            </div>
+          </form>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
 </div>
-
-<h2>List of messages</h2>
-<ul class="heroes">
-  <li *ngFor="let message of messages">
-    <span>{{ message.id }}</span>
-    <span>{{ message.content }}</span>
-    <button [class.selected]="message === selectedMessage"  type="button" (click)="onSelect(message)">Select me</button>
-  </li>
-</ul>
-
-<app-message-detail [message]="selectedMessage"></app-message-detail>
