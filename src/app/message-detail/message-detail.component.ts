@@ -63,7 +63,7 @@ export class MessageDetailComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  onSubmit() : void {
     this.submitted = true;
 
     if (this.form.invalid) {
@@ -72,9 +72,9 @@ export class MessageDetailComponent implements OnInit {
 
     this.loading = true;
     if (this.isAddMode) {
-      this.createUser();
+      this.createMessage();
     } else {
-      this.updateUser();
+      this.updateMessage();
     }
   }
 
@@ -83,7 +83,7 @@ export class MessageDetailComponent implements OnInit {
     return this.form.controls;
   }
 
-  private createUser() {
+  private createMessage(): void {
     this.messageService
       .addMessage({
         ...this.form.value,
@@ -108,7 +108,7 @@ export class MessageDetailComponent implements OnInit {
       });
   }
 
-  private updateUser() {
+  private updateMessage(): void {
     let tagsParsed = [];
     if (Array.isArray(this.form.value.tags)) {
       tagsParsed = this.form.value.tags;
