@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, createPlatform } from '@angular/core';
-import { Message } from '../message';
+import { Message } from '../message/message';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
