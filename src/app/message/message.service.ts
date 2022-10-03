@@ -43,4 +43,9 @@ export class MessageService {
     const url = `${this.urlMessages}/${id}`;
     return this.http.delete<Message>(url, this.httpOptions);
   }
+
+  searchMessages(searchObject: object): Observable<Message[]> {
+    const url = `${this.urlMessages}/search`;
+    return this.http.post<Message[]>(url, searchObject, this.httpOptions);
+  }
 }

@@ -1,6 +1,19 @@
 <div class="d-flex flex-column">
   <div>
-    <h2>List of messages</h2>
+    <h2 class="mb-3">List of messages</h2>
+
+    <form class="d-flex mb-3" (ngSubmit)="onSearch()">
+      <textarea
+        class="form-control me-2"
+        type="search"
+        placeholder='[ { "key": "content", "operator": "BETWEEN", "field_type" : "DATE", "value" : "yyyy-MM-dd HH:mm:SS", "value_to" : "yyyy-MM-dd HH:mm:SS"}]'
+        aria-label="Search"
+        name="search"
+        rows="10"
+        [(ngModel)]="searchText"
+      ></textarea>
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
 
     <ngb-accordion #acc="ngbAccordion">
       <ngb-panel
