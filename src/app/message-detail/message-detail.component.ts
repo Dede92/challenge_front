@@ -48,7 +48,18 @@ export class MessageDetailComponent implements OnInit {
       this.messageService
         .getMessageById(this.id)
         .pipe(first())
-        .subscribe((x) => this.form.patchValue(x));
+        .subscribe((x) => {
+          let deadlineStr = '';
+          if (x.deadline) {
+            let deadlineDate = new Date(x.deadline);
+            const offset = deadlineDate.getTimezoneOffset();
+            deadlineDate = new Date(
+              deadlineDate.getTime() - offset * 60 * 1000
+            );
+            deadlineStr = deadlineDate.toISOString().split('T')[0];
+          }
+          return this.form.patchValue({ ...x, deadline: deadlineStr });
+        });
     }
   }
 
@@ -82,6 +93,9 @@ export class MessageDetailComponent implements OnInit {
               .split(',')
               .map((tag: string) => tag.trim())
           : [],
+        deadline: this.form.value.deadline
+          ? new Date(this.form.value.deadline).toISOString()
+          : '',
       })
       .pipe(first())
       .subscribe({
@@ -95,15 +109,23 @@ export class MessageDetailComponent implements OnInit {
   }
 
   private updateUser() {
+    let tagsParsed = [];
+    if (Array.isArray(this.form.value.tags)) {
+      tagsParsed = this.form.value.tags;
+    } else if (this.form.value.tags.trim()) {
+      tagsParsed = this.form.value.tags
+        .trim()
+        .split(',')
+        .map((tag: string) => tag.trim());
+    }
+
     this.messageService
       .updateMessage(this.id, {
         ...this.form.value,
-        tags: this.form.value.tags.trim()
-          ? this.form.value.tags
-              .trim()
-              .split(',')
-              .map((tag: string) => tag.trim())
-          : [],
+        tags: tagsParsed,
+        deadline: this.form.value.deadline
+          ? new Date(this.form.value.deadline).toISOString()
+          : '',
       })
       .pipe(first())
       .subscribe({
