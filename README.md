@@ -2,6 +2,22 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.4.
 
+## Docker server 
+
+Following command will prepare the docker
+```
+docker image build -t docker-ng-intro . 
+```
+
+Run the container with the following commands
+```
+docker run --name challenge_front -d -p 4200:80 docker-ng-intro
+```
+
+## Styling
+
+The application uses Bootstrap@5.2.0
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
